@@ -43,4 +43,6 @@ private:
     void stopRecordingCallback(const std::shared_ptr<camera_interfaces::srv::StopRecording::Request> request, std::shared_ptr<camera_interfaces::srv::StopRecording::Response> response);
 };
 
+cv::Mat resizeToFit(const cv::Mat &input_image, int max_width, int max_height);
+
 #endif // PHYSICAL_CAMERA_HPP

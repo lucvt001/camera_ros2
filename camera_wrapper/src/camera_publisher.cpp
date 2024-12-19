@@ -81,6 +81,8 @@ void CameraPublisher::publishImage()
     }
     else cap_ >> frame_; // Capture a frame
 
+    frame_ = resizeToFit(frame_, 640, 640); // Resize the frame
+
     if (is_display_) {
         cv::imshow("frame", frame_); // Display the frame
         cv::waitKey(10);
@@ -170,4 +172,31 @@ void CameraPublisher::loadCameraCalibration()
 
     RCLCPP_WARN(this->get_logger(), "Camera calibration enabled!");
     is_calibration_enabled_ = true;
+}
+
+cv::Mat resizeToFit(const cv::Mat &input_image, int max_width, int max_height) {
+    // Get the original dimensions of the image
+    int original_width = input_image.cols;
+    int original_height = input_image.rows;
+
+    // Calculate the aspect ratio
+    float aspect_ratio = static_cast<float>(original_width) / static_cast<float>(original_height);
+
+    // Compute the new dimensions while retaining aspect ratio
+    int new_width = max_width;
+    int new_height = max_height;
+
+    if (aspect_ratio > 1.0f) {
+        // Landscape image: scale width to max_width and adjust height
+        new_height = static_cast<int>(max_width / aspect_ratio);
+    } else {
+        // Portrait or square image: scale height to max_height and adjust width
+        new_width = static_cast<int>(max_height * aspect_ratio);
+    }
+
+    // Resize the image
+    cv::Mat resized_image;
+    cv::resize(input_image, resized_image, cv::Size(new_width, new_height));
+
+    return resized_image;
 }

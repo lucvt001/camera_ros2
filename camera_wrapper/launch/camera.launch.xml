@@ -4,7 +4,7 @@
     <arg name="camera2_topic" default="/sensor/camera2" />
 
     <node name="camera_publisher_node" pkg="camera_wrapper" exec="camera_wrapper" output="screen">
-        <param name="input" value="/ros2_ws/src/camera_ros2/camera_wrapper/recordings/IMG_5963.MOV" />
+        <param name="input" value="$(find-pkg-share camera_wrapper)/recordings/IMG_5963.MOV" />
         <param name="topic_name" value="$(var camera1_topic)" />
         <param name="is_wsl2" value="false" />
         <param name="is_display" value="false" />

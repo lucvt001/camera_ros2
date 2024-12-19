@@ -37,7 +37,8 @@ add_executable(camera_wrapper
 ament_target_dependencies(camera_wrapper ${ROS2_DEPENDENCIES})
 target_link_libraries(camera_wrapper ${OpenCV_LIBRARIES})
 install(TARGETS camera_wrapper DESTINATION lib/${PROJECT_NAME})
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch recordings
+  DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
